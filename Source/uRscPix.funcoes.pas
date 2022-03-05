@@ -34,7 +34,11 @@ interface
     System.SysUtils
     ,System.Math
     ,System.UITypes
+    {$IfDEF DELPHIXE8_UP}
     ,System.NetEncoding
+    {$ELSE}
+    , Soap.EncdDecd
+    {$ENDIF}
     ,System.Classes
 
     ,IdHashMessageDigest
@@ -130,8 +134,11 @@ begin
     Output := TBytesStream.Create;
     Result  :=  TMemoryStream.Create;
     try
+      {$IfDEF DELPHIXE8_UP}
       System.NetEncoding.TBase64Encoding.Base64.Decode(Input, Output);
-//      Soap.EncdDecd.DecodeStream(Input, Output);
+      {$ELSE}
+      Soap.EncdDecd.DecodeStream(Input, Output);
+      {$ENDIF}
       Output.Position := 0;
       try
         Result.LoadFromStream(Output);

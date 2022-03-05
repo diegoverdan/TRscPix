@@ -36,7 +36,9 @@ uses
   System.StrUtils,
   System.SyncObjs,
   System.DateUtils,
-  System.threading,
+  {$IfDEF DELPHIXE8_UP}
+  System.Threading,
+  {$ENDIF}
   System.JSON, // ver se troca depois pelo RDW
 
   REST.Json,
